@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Select Images</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+
+<form id="selectTileForm" action="/processSelectedTile" method="post">
+    <span th:each="tile : ${tiles}">
+        <img class="image-container"
+             th:src="@{'/images/0' + ${tile.getNumber()} + '.jpg' }"
+             th:alt="${tile.getNumber()}"
+             th:onclick="'toggleSelection(' + ${tile.getNumber()} + ');'"
+        />
+    </span>
+    <br>
+  <button type="submit">Submit</button>
+</form>
+
+<hr>
+<br>
+
+<div id="selectedTilesContainer"></div>
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

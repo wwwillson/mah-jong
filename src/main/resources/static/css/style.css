@@ -1,0 +1,19 @@
+.image-container {
+    width: 100px;
+    height: 100px;
+    margin-right: 5px;
+}
+
+.disabled {
+    pointer-events: none; /* 禁用点击事件 */
+    opacity: 0.6; /* 改变透明度表示不可点击 */
+    cursor: not-allowed; /* 改变鼠标样式 */
+}
+
+.image-btn {
+    border: none;  /* Remove button border */
+    background: none;  /* Remove button background */
+    padding: 0;  /* Remove button padding */
+    cursor: pointer;  /* Add cursor pointer on hover */
+    outline: none;  /* Remove button outline on click */
+}

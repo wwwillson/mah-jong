@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Selected Images</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+
+<span th:each="selectedTile : ${selectedTiles}">
+    <img class="image-container" th:src="@{'/images/0' + ${selectedTile.getNumber()} + '.jpg' }"/>
+</span>
+
+<br>
+
+<a th:href="@{/selectTile}">Back</a>
+
+<hr>
+<br>
+
+<span th:each="listenCard : ${listenCards}">
+        <img class="image-container" th:src="@{'/images/0' + ${listenCard} + '.jpg' }"/>
+</span>
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
