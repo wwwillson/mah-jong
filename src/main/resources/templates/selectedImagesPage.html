@@ -10,16 +10,37 @@
     <img class="image-container" th:src="@{'/images/0' + ${selectedTile.getNumber()} + '.jpg' }"/>
 </span>
 
+<hr>
+<br>
+<br>
+
+<span th:text="${messages}"></span>
+
+<div th:if="${listenCards != null}">
+    <!-- Accessing HashMap values using Thymeleaf expression -->
+    <p th:text="${listenCards['key']}"></p>
+
+    <!-- Iterating over HashMap entries -->
+    <ul>
+        <li th:each="entry : ${listenCards.entrySet()}">
+            <span th:if="${entry.key != null}" th:text="打"></span>
+            <span th:if="${entry.key != null}">
+                <img class="image-container" th:src="@{'/images/0' + ${entry.key} + '.jpg' }"/>
+            </span>
+            <!-- <span th:text="${entry.value}"></span> -->
+            <span th:text="  聽"></span>
+            <span th:each="listenCard : ${entry.value}">
+                <img class="image-container" th:src="@{'/images/0' + ${listenCard} + '.jpg' }"/>
+            </span>
+        </li>
+    </ul>
+</div>
+
+<br>
 <br>
 
 <a th:href="@{/selectTile}">Back</a>
 
-<hr>
-<br>
-
-<span th:each="listenCard : ${listenCards}">
-        <img class="image-container" th:src="@{'/images/0' + ${listenCard} + '.jpg' }"/>
-</span>
 
 <script src="/js/script.js"></script>
 

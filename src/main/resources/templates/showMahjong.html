@@ -14,14 +14,18 @@
              th:onclick="'toggleSelection(' + ${tile.getNumber()} + ');'"
         />
     </span>
+
+    <hr>
     <br>
-  <button type="submit">Submit</button>
+    <br>
+
+    <div id="selectedTilesContainer"></div>
+
+    <br>
+    <br>
+
+    <button id="roundCornerBtn">Submit</button>
 </form>
-
-<hr>
-<br>
-
-<div id="selectedTilesContainer"></div>
 
 <script src="/js/script.js"></script>
 

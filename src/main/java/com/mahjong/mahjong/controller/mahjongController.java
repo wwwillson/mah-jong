@@ -1,11 +1,9 @@
 package com.mahjong.mahjong.controller;
-import com.mahjong.mahjong.model.ImageForm;
 import com.mahjong.mahjong.model.MahjongGame;
 import com.mahjong.mahjong.model.Tile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -40,9 +38,11 @@ public class mahjongController {
         }
 
         if (mahjongGame.isWinningHand()) {
-            model.addAttribute("listenCards", mahjongGame.getListenCards());
-        } else {
-            model.addAttribute("messages", "沒聽牌");
+            model.addAttribute("messages", "胡牌!");
+        } else if (mahjongGame.isListenHand()){
+            model.addAttribute("listenCards", mahjongGame.getHMlistenCards());
+        } else{
+            model.addAttribute("messages", "沒聽牌!");
         }
 
         model.addAttribute("selectedTiles", mahjongGame.getPlayerTiles());

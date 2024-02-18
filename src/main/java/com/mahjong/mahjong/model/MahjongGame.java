@@ -1,16 +1,22 @@
 package com.mahjong.mahjong.model;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MahjongGame {
     private List<Tile> playerTiles = new ArrayList<>();
     private List<Tile> allTiles = new ArrayList<>();
     private List<String> listenCards = new ArrayList<>();
+    private HashMap<String,List<String>> HMlistenCards = new HashMap<>();
+    private String message = "";
+    private boolean WinningHand;
 
+    public String getMessage() {
+        return message;
+    }
+    public HashMap<String, List<String>> getHMlistenCards() {
+        return HMlistenCards;
+    }
     public MahjongGame() {
         initializeTiles();
     }
@@ -43,17 +49,60 @@ public class MahjongGame {
         {
             tiles.add(String.valueOf(tile.getNumber()));
         }
-        FindListenCards(tiles);
 
-        if(getListenCards().size() > 0)
+        if(tiles.size()%3==2){
+            WinningHand = false;
+            FindListenCards(tiles);
+            listenCards.clear();
+        }
+        return WinningHand;
+    }
+
+    public boolean isListenHand() {
+        List<String> tiles = new ArrayList<>();
+        Collections.sort(playerTiles, Comparator.comparingInt(Tile::getNumber));
+        for(Tile tile: playerTiles)
+        {
+            tiles.add(String.valueOf(tile.getNumber()));
+        }
+
+        if(tiles.size()%3==0){
+            return false;
+        }else if(tiles.size()%3==2){
+            for (int i = 0; i < tiles.size(); i++) {
+                if(HMlistenCards.containsKey(tiles.get(i)))
+                    continue;
+
+                List<String> playTiles = new ArrayList<>();
+                for (int j = 0; j < tiles.size(); j++) {
+                    if(j == i)
+                        continue;
+                    System.out.print("add  "+tiles.get(j));
+                    playTiles.add(tiles.get(j));
+                }
+                FindListenCards(playTiles);
+                if(listenCards.size()>0){
+                    List<String> newTiles = new ArrayList<>();
+                    newTiles.addAll(getListenCards());
+                    HMlistenCards.put(tiles.get(i),newTiles);
+                    listenCards.clear();
+                }
+
+            }
+        }else{
+            FindListenCards(tiles);
+            if(listenCards.size()>0){
+                HMlistenCards.put(null,getListenCards());
+            }
+        }
+
+        if(HMlistenCards.size() > 0)
             return true;
         else
             return false;
     }
-
     public void FindListenCards(List<String> cardArray) {
         int card1, card2, card3;
-
         if (cardArray.size() == 1) {
             listenCards.add(cardArray.get(0));
         } else if (cardArray.size() == 2) {
@@ -61,6 +110,7 @@ public class MahjongGame {
             card2 = Integer.parseInt(cardArray.get(1));
 
             if (card1 == card2) {
+                WinningHand = true;
                 listenCards.add(cardArray.get(0));
             } else if (card1 + 1 == card2) {
                 if (card1 != 1) {
